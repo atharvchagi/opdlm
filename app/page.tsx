@@ -168,6 +168,13 @@ export default function Page() {
               <h3 className="text-xl font-sans font-semibold text-ink mb-3">
                 General-Purpose DLM Results
               </h3>
+              <p className="text-base font-sans text-ink/80 mb-4 leading-relaxed">
+                OPDLM converts Qwen3 into a diffusion language model for general-purpose
+                reasoning across knowledge, mathematics, science, and code. OPDLM-4B and OPDLM-8B reach performance
+                competitive with existing DLMs while training on only 0.076B and 0.066B
+                tokens, orders of magnitude fewer than the baselines, and at substantially
+                lower FLOPs.
+              </p>
               <ResultsTable
                 columns={generalPurposeColumns}
                 rows={[
@@ -205,6 +212,15 @@ export default function Page() {
               <h4 className="text-sm font-sans font-semibold uppercase tracking-widest text-muted mb-2">
                 Zero-Shot Extended Thinking
               </h4>
+              <p className="text-base font-sans text-ink/80 mb-4 leading-relaxed">
+                Modern ARLMs can reason through a problem inside a{" "}
+                <code>&lt;think&gt;...&lt;/think&gt;</code> trace before committing to an
+                answer. We never train OPDLM to do this, yet the converted DLM does it
+                zero-shot: when prompted to think, OPDLM-8B improves on the hardest reasoning
+                benchmarks, raising AIME-24 from 14.7 to 18.6 and AIME-25 from 12.4 to 19.4.
+                The base ARLM's reasoning ability survives on-policy conversion intact,
+                emerging as a capability we never explicitly trained for.
+              </p>
               <ResultsTable
                 columns={zeroShotColumns}
                 rows={[
@@ -229,6 +245,12 @@ export default function Page() {
               <h4 className="text-sm font-sans font-semibold uppercase tracking-widest text-muted mt-7 mb-2">
                 Multilingual Results
               </h4>
+              <p className="text-base font-sans text-ink/80 mb-4 leading-relaxed">
+                OPDLM keeps the multilingual ability of the base ARLM after conversion.
+                without any multilingual-specific training. It holds performance across
+                MMMLU-lite, INCLUDE-lite, and MLogiQA, and even improves on multilingual
+                Math (MT-AIME 2024).
+              </p>
               <ResultsTable
                 columns={multilingualColumns}
                 rows={[
