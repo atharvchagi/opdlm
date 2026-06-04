@@ -1,8 +1,11 @@
+import type { ReactNode } from "react";
+
 interface FigureBlockProps {
   src?: string;
   alt?: string;
-  caption?: string;
+  caption?: ReactNode;
   width?: "full" | "lg" | "md";
+  heightClass?: string;
   /** CSS-only placeholder label — shown when src is not provided */
   placeholderLabel?: string;
 }
@@ -12,6 +15,7 @@ export default function FigureBlock({
   alt = "Figure",
   caption,
   width = "full",
+  heightClass = "h-auto",
   // ─── REPLACE: Set placeholderLabel to describe what the figure should show ──
   placeholderLabel = "Replace with your figure image",
 }: FigureBlockProps) {
@@ -25,13 +29,21 @@ export default function FigureBlock({
     <figure className={`my-8 ${widthClass}`}>
       <div className="rounded-xl border border-border overflow-hidden bg-code-bg shadow-sm">
         {src ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={src}
-            alt={alt}
-            className="w-full object-contain"
-            loading="lazy"
-          />
+          src.endsWith(".pdf") ? (
+            <iframe
+              src={src}
+              title={alt}
+              className={`w-full ${heightClass} bg-white`}
+            />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={alt}
+              className="w-full object-contain"
+              loading="lazy"
+            />
+          )
         ) : (
           /* CSS-only placeholder */
           <div
@@ -69,7 +81,7 @@ export default function FigureBlock({
         )}
       </div>
       {caption && (
-        <figcaption className="mt-3 text-sm text-center text-muted font-sans italic leading-snug px-4">
+        <figcaption className="mt-3 text-sm text-center text-muted font-sans font-semibold leading-snug px-4">
           {caption}
         </figcaption>
       )}

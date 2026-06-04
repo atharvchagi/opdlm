@@ -15,4 +15,5 @@ tsconfig.tsbuildinfo
 *.tsbuildinfo
 
 .DS_Store
+*:Zone.Identifier
 .vercel

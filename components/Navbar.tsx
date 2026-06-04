@@ -4,10 +4,12 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 
 const NAV_LINKS = [
-  { label: "Quick Start", href: "#quick-start" },
-  { label: "Why", href: "#why-opdlm" },
   { label: "How", href: "#how-opdlm-works" },
+  { label: "Highlights", href: "#highlights" },
   { label: "Results", href: "#results" },
+  { label: "Parallelization", href: "#parallelization" },
+  { label: "Quick Start", href: "#quick-start" },
+  { label: "Citation", href: "#citation" },
 ];
 
 export default function Navbar() {

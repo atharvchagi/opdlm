@@ -21,6 +21,8 @@ const HERO_DATA = {
 
 export default function Hero() {
   const { title, authors, affiliations, venue } = HERO_DATA;
+  const firstLineAuthors = authors.slice(0, 7);
+  const secondLineAuthors = authors.slice(7);
 
   return (
     <section className="pt-24 pb-8 text-left">
@@ -32,10 +34,21 @@ export default function Hero() {
 
       {/* Authors */}
       <p className="text-base text-muted font-sans mb-1.5">
-        {authors.map((author, i) => (
-          <span key={author.name}>
-            {i > 0 && <span className="mx-1 text-border">·</span>}
-            <span>{author.name}</span>
+        {firstLineAuthors.map((author, i) => (
+          <span key={author.name} className={i < firstLineAuthors.length - 1 ? "inline-block mr-2" : "inline-block"}>
+            <span className="font-semibold text-ink">{author.name}</span>
+            {author.equalContribution && (
+              <sup className="text-muted/70 text-[10px] ml-0.5">*</sup>
+            )}
+            {author.affiliation && (
+              <sup className="text-muted/70 text-[10px] ml-0.5">{author.affiliation}</sup>
+            )}
+          </span>
+        ))}
+        <br />
+        {secondLineAuthors.map((author, i) => (
+          <span key={author.name} className={i < secondLineAuthors.length - 1 ? "inline-block mr-2" : "inline-block"}>
+            <span className="font-semibold text-ink">{author.name}</span>
             {author.equalContribution && (
               <sup className="text-muted/70 text-[10px] ml-0.5">*</sup>
             )}

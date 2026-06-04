@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 
 const TOC_ITEMS = [
-  { id: "quick-start", label: "Quick Start" },
-  { id: "why-opdlm", label: "Why OPDLM?" },
-  { id: "how-opdlm-works", label: "How It Works" },
+  { id: "how-opdlm-works", label: "How OPDLM Works" },
+  { id: "highlights", label: "Highlights" },
   { id: "results", label: "Results" },
-  { id: "conclusion", label: "Conclusion" },
+  { id: "parallelization", label: "Parallelization" },
+  { id: "quick-start", label: "Quick Start" },
   { id: "citation", label: "Citation" },
 ];
 
@@ -15,22 +15,34 @@ export default function TableOfContents() {
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
-    const headings = TOC_ITEMS.map((item) => document.getElementById(item.id)).filter(Boolean) as HTMLElement[];
+    const sections = TOC_ITEMS.map((item) => document.getElementById(item.id)).filter(Boolean) as HTMLElement[];
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting);
-        if (visible.length > 0) {
-          // Pick the topmost visible heading
-          const top = visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
-          setActiveId(top.target.id);
+    const updateActive = () => {
+      const offset = 120;
+      let current = sections[0]?.id ?? "";
+
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= offset) {
+          current = section.id;
         }
-      },
-      { rootMargin: "-80px 0px -60% 0px" }
-    );
+      }
 
-    headings.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+      setActiveId(current);
+    };
+
+    updateActive();
+    const frame = window.requestAnimationFrame(updateActive);
+    const timeout = window.setTimeout(updateActive, 150);
+    window.addEventListener("scroll", updateActive, { passive: true });
+    window.addEventListener("resize", updateActive);
+    window.addEventListener("hashchange", updateActive);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timeout);
+      window.removeEventListener("scroll", updateActive);
+      window.removeEventListener("resize", updateActive);
+      window.removeEventListener("hashchange", updateActive);
+    };
   }, []);
 
   return (
