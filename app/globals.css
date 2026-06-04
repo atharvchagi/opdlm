@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #faf9f7;
+  --ink: #1a1a18;
+  --muted: #6b6b65;
+  --border: #e2e0db;
+  --accent: #e6ffe6;
+  --accent-light: #e6ffe6;
+  --accent-border: #a7d8a7;
+  --accent-strong: #166534;
+  --code-bg: #f4f3f0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Anchor offset for sticky nav */
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Code block syntax */
+pre, code {
+  font-family: 'IBM Plex Mono', 'Fira Code', monospace;
+}
+
+.equation-scroll .katex-display {
+  margin: 0;
+}
+
+.equation-scroll .katex {
+  font-size: 1rem;
+}
+
+.inline-math .katex {
+  font-size: 1em;
+}
+
+@media (max-width: 640px) {
+  .equation-scroll .katex {
+    font-size: 0.9rem;
+  }
+}
+
+/* Smooth section reveal */
+.section-reveal {
+  animation: fadeUp 0.5s ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Selection highlight */
+::selection {
+  background: #e6ffe6;
+}
+
+/* Thin scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
