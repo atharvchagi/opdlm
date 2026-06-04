@@ -56,6 +56,41 @@ export default function Page() {
 
         <div className="flex gap-0 xl:gap-12 items-start">
           <div className="flex-1 min-w-0">
+          
+            <Section id="motivation" title="Motivation">
+              <p className="text-base font-sans text-ink/80 leading-relaxed mb-4">
+                Pretraining a diffusion language model (DLM) from scratch is expensive, and
+                existing open DLMs still trail autoregressive language models (ARLMs) of
+                comparable scale on standard benchmarks. Rather than start over, we ask
+                whether the capabilities already learned by a pretrained ARLM can be
+                transferred to a DLM. A natural candidate is on-policy distillation (OPD),
+                which supervises a student on its own rollouts and has proven effective in post-training. 
+                This motivates the central research question of our work:
+              </p>
+              <blockquote className="border-l-4 border-ink/30 pl-4 italic text-base font-sans text-ink/90 leading-relaxed mb-4">
+                Can we convert a pretrained ARLM into a DLM while preserving its prior?
+                And can OPD do it?
+              </blockquote>
+              <p className="text-base font-sans text-ink/80 leading-relaxed mb-4">
+                Applying OPD here runs into a chicken-and-egg problem, i.e, the teacher needs to
+                be a capable DLM in order to score the masked, partially masked states the
+                student visits, but a capable DLM is exactly what we are trying to build.
+                OPDLM bypasses this by querying the ARLM directly as the teacher, reading
+                out its prior through causal prefixes of the student's rollouts. This gives
+                a self-distillation setup:
+              </p>
+              <ul className="list-disc pl-5 space-y-2 text-base font-sans text-ink/80 leading-relaxed">
+                <li>
+                  <strong>Teacher:</strong> the frozen pretrained ARLM, queried only for
+                  token-level distributions over causal clean blocks. 
+                </li>
+                <li>
+                  <strong>Student:</strong> a block-diffusion LM initialized from the same
+                  ARLM weights, trained to predict masked tokens under blockwise bidirectional attention.
+                </li>
+              </ul>
+            </Section>
+            
             <Section id="how-opdlm-works" title="How OPDLM Works">
               <FigureBlock
                 src="/figures/opdlm_framework_v1.png"
