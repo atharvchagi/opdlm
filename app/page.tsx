@@ -267,6 +267,11 @@ export default function Page() {
               <h3 className="text-xl font-sans font-semibold text-ink mt-9 mb-3">
                 Specialized DLM Results
               </h3>
+              <p className="text-base font-sans text-ink/80 mb-4 leading-relaxed">
+                Since OPDLM is a form of post-training applied to ARLMs, we can also build
+                specialized DLMs. Below, we train OPDLM specifically for math to obtain
+                OPDLM-MATH, using the same on-policy distillation setup. Additionally, we train OPDLM-MATH-Thinking for extended reasoning. 
+              </p>
               <ResultsTable
                 columns={specializedColumns}
                 rows={[
@@ -285,14 +290,14 @@ export default function Page() {
                   { model: "TraDo-8B-Thinking", gsm8k: "94.2", math500: "87.4", aime24: "35.5" },
                   { model: "OPDLM-MATH-8B-Thinking", gsm8k: "93.8", math500: "92.4", aime24: "50.0", highlightRow: true },
                 ]}
-                caption="Without a verifier signal or DLM pretraining, OPDLM-MATH is especially strong on harder math benchmarks; thinking variants are trained as separate models for extended reasoning."
+                caption="Without RLVR or DLM pretraining, OPDLM-MATH performs competitively with baselines and is especially strong on harder math benchmarks; thinking variants are trained as separate models for extended reasoning."
               />
             </Section>
 
             <Section id="parallelization" title="Parallelization">
               <p className="text-base font-sans text-ink/80 leading-relaxed mb-5">
                 We show two controls on inference throughput: lowering the decoding threshold lets
-                OPDLM emit more tokens per denoising step, while the training block size sets the
+                OPDLM produce more tokens per denoising step, while the training block size sets the
                 upper bound on the parallelism it can expose at inference time.
               </p>
               <div className="grid gap-4 md:grid-cols-2">
