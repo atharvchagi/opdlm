@@ -121,10 +121,8 @@ export default function Page() {
                 Rollout-Length Curriculum
               </h3>
               <p className="text-base font-sans text-ink/80 leading-relaxed">
-                Early reverse rollouts can be noisy because the converted student is being queried
-                with masked-token inputs and blockwise bidirectional attention for the first time.
-                OPDLM starts with shorter rollouts and gradually increases rollout length, so the
-                ARLM teacher is less often asked to supervise incoherent early terminal sequences.
+                Early in training, the terminal sequences the student generates by running its reverse diffusion process are low-quality, since the converted student is being queried with masked-token inputs and blockwise bidirectional attention for the first time. 
+                To address this, OPDLM begins by generating shorter sequences and gradually increases their length, helping training stability and convergence.
               </p>
             </Section>
 
