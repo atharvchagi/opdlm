@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import ResultCard from "@/components/ResultCard";
 import ResultsTable from "@/components/ResultsTable";
 import FigureBlock from "@/components/FigureBlock";
+import InteractiveParallelizationCharts from "@/components/InteractiveParallelizationCharts";
 import CitationBlock from "@/components/CitationBlock";
 import TableOfContents from "@/components/TableOfContents";
 import Footer from "@/components/Footer";
@@ -298,20 +299,7 @@ export default function Page() {
                 OPDLM produce more tokens per denoising step, while the training block size sets the
                 upper bound on the parallelism it can expose at inference time.
               </p>
-              <div className="grid gap-4 md:grid-cols-2">
-                <FigureBlock
-                  src="/math500_threshold_tokens_block4.png"
-                  alt="Parallelization figure for threshold versus tokens per step at block size 4"
-                  heightClass="h-[360px] md:h-[420px]"
-                  caption={<strong>Lowering the decoding threshold increases tokens per step with an accuracy trade-off.</strong>}
-                />
-                <FigureBlock
-                  src="/math500_blocksize_tokens_thr090.png"
-                  alt="Parallelization figure for block size versus tokens per step at threshold 0.9"
-                  heightClass="h-[360px] md:h-[420px]"
-                  caption={<strong>At fixed gamma=0.9, larger block sizes increase tokens per step while trading off accuracy.</strong>}
-                />
-              </div>
+              <InteractiveParallelizationCharts />
             </Section>
 
             <Section id="quick-start" title="Quick Start">

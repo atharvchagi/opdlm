@@ -30,7 +30,7 @@ const LINKS = [
     href: "https://huggingface.co/collections/divelab/opdlm",
     icon: (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src="/hf_logo.png" alt="" className="h-5 w-5 object-contain" />
+      <img src="/hf_logo.png" alt="" className="h-3.5 w-3.5 object-contain" />
     ),
     iconOnly: true,
     primary: false,
