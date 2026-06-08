@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 
 const NAV_LINKS = [
+  { label: "Motivation", href: "#motivation" },
   { label: "How", href: "#how-opdlm-works" },
   { label: "Highlights", href: "#highlights" },
   { label: "Results", href: "#results" },
