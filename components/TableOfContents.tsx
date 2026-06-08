@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 const TOC_ITEMS = [
+  { id: "motivation", label: "Motivation" },
   { id: "how-opdlm-works", label: "How OPDLM Works" },
   { id: "highlights", label: "Highlights" },
   { id: "results", label: "Results" },
