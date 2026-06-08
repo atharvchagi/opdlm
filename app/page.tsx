@@ -60,36 +60,56 @@ export default function Page() {
           
             <Section id="motivation" title="Motivation">
               <p className="text-base font-sans text-ink/80 leading-relaxed mb-4">
-                Pretraining a diffusion language model (DLM) from scratch is expensive, and
-                existing open DLMs still trail autoregressive language models (ARLMs) of
-                comparable scale on standard benchmarks. Rather than start over, we ask
-                whether the capabilities already learned by a pretrained ARLM can be
-                transferred to a DLM. A natural candidate is on-policy distillation (OPD),
-                which supervises a student on its own rollouts and has proven effective in post-training. 
-                This motivates the central research question of our work:
+                Pretraining a diffusion language model (DLM) from scratch is expensive.
+                Recent AR-to-DLM conversion methods reduce this cost by starting from
+                pretrained autoregressive language models (ARLMs), but they still face
+                two key mismatches: changing the training objective can weaken knowledge
+                inherited from the ARLM, and standard DLM training uses randomly masked
+                states that differ from the partially denoised states encountered during
+                inference with confidence-based samplers.
               </p>
-              <blockquote className="border-l-4 border-ink/30 pl-4 italic text-base font-sans text-ink/90 leading-relaxed mb-4">
-                Can we convert a pretrained ARLM into a DLM while preserving its prior?
-                And can OPD do it?
-              </blockquote>
               <p className="text-base font-sans text-ink/80 leading-relaxed mb-4">
-                Applying OPD here runs into a chicken-and-egg problem, i.e, the teacher needs to
-                be a capable DLM in order to score the masked, partially masked states the
-                student visits, but a capable DLM is exactly what we are trying to build.
-                OPDLM bypasses this by querying the ARLM directly as the teacher, reading
-                out its prior through causal prefixes of the student's rollouts. This gives
-                a self-distillation setup:
+                OPDLM asks whether we can convert a pretrained ARLM into a DLM as a
+                lightweight post-training procedure while preserving the capabilities
+                learned during autoregressive pretraining and while addressing the divide
+                between train and inference state distributions.
+              </p>
+              <p className="text-base font-sans text-ink/80 leading-relaxed mb-4">
+                A natural tool for this is <strong>on-policy distillation (OPD)</strong>,
+                which trains a student on states sampled from its own generation process
+                while using a teacher to provide token-level supervision. But applying OPD
+                to DLM conversion creates a chicken-and-egg problem: a DLM student visits
+                partially masked diffusion states, so a direct OPD setup would require a
+                capable DLM teacher to score those states.
+              </p>
+              <p className="text-base font-sans text-ink/80 leading-relaxed mb-4">
+                OPDLM bypasses this requirement by using the original frozen ARLM as the
+                teacher. The student is initialized from the same ARLM weights, converted
+                into a block-diffusion model, and trained on its own reverse diffusion
+                trajectories. For each partially denoised student state, OPDLM uses the
+                terminal denoised sequence to query the ARLM teacher on causal prefixes,
+                producing token-level target distributions for the masked positions.
+              </p>
+              <p className="text-base font-sans text-ink/80 leading-relaxed mb-4">
+                This creates a self-distillation setup:
               </p>
               <ul className="list-disc pl-5 space-y-2 text-base font-sans text-ink/80 leading-relaxed">
                 <li>
-                  <strong>Teacher:</strong> the frozen pretrained ARLM, queried only for
-                  token-level distributions over causal clean blocks. 
+                  <strong>Teacher:</strong> the original frozen ARLM, queried for
+                  token-level distributions on causal prefixes of the student's generated
+                  sequence.
                 </li>
                 <li>
                   <strong>Student:</strong> a block-diffusion LM initialized from the same
-                  ARLM weights, trained to predict masked tokens under blockwise bidirectional attention.
+                  ARLM, trained to predict masked tokens under blockwise bidirectional
+                  attention.
                 </li>
               </ul>
+              <p className="text-base font-sans text-ink/80 leading-relaxed mt-4">
+                By training directly on the student's inference-time states while
+                distilling from the original ARLM, OPDLM reduces the train-inference gap
+                in DLM training and improves knowledge retention during conversion.
+              </p>
             </Section>
             
             <Section id="how-opdlm-works" title="How OPDLM Works">
@@ -323,8 +343,8 @@ export default function Page() {
               </h3>
               <CodeBlock
                 language="bash"
-                code={`git clone <opdlm-repo-url>
-cd opdlm
+                code={`git clone https://github.com/divelab/OPDLM.git
+cd OPDLM
 
 conda create -n opdlm python=3.10.19 -y
 conda activate opdlm
