@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 
-const BIBTEX = `@misc{su2026opdlm,
-  title  = {Data-Efficient Autoregressive-to-Diffusion Language Models via On-Policy Distillation},
-  author = {Su, Xingyu and Helwig, Jacob and Parashar, Shubham and Chagi, Atharv and
-            Jotsna, Lakshmi and Zhi, Degui and Caverlee, James and Kalathil, Dileep and
-            Ji, Shuiwang},
-  year   = {2026},
-  note   = {Preprint}
+const BIBTEX = `@misc{su2026dataefficientautoregressivetodiffusionlanguagemodels,
+      title={Data-Efficient Autoregressive-to-Diffusion Language Models via On-Policy Distillation},
+      author={Xingyu Su and Jacob Helwig and Shubham Parashar and Atharv Chagi and Lakshmi Jotsna and Degui Zhi and James Caverlee and Dileep Kalathil and Shuiwang Ji},
+      year={2026},
+      eprint={2606.06712},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2606.06712},
 }`;
 
 export default function CitationBlock() {
